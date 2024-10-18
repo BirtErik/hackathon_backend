@@ -1,0 +1,38 @@
+# This configuration is intended for development purpose, it's **your** responsibility to harden it for production
+name: hackathon
+services:
+  postgresql:
+    image: postgres:16.4
+    volumes:
+      - hackathon-postgresql:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=SuperStrongP455word!
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=hackathon
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U $${POSTGRES_USER}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:5432:5432
+  pgadmin:
+    image: dpage/pgadmin4:8.12.0
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    ports:
+      - "8888:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    volumes:
+      - hackathon-pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin/servers.json:/pgadmin4/servers.json
+
+volumes:
+    hackathon-postgresql:
+    hackathon-pgadmin-data:
