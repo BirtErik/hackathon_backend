@@ -80,7 +80,10 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Latitude = 45.894400777503115,
                             Longitude = 16.841388496733092
                         },
-                        TenantId = Tenant1Id,        
+                        TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -95,6 +98,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.844389305123684
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -109,6 +115,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.86435901207815
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -123,6 +132,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.83117753885558
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -137,6 +149,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.82249707783893
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -151,6 +166,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.824765040913793
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -165,6 +183,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.860769922645908
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -179,6 +200,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.844103762792447
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                         new VenueEntity
                     {
@@ -193,6 +217,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.936848167895533
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                           new VenueEntity
                     {
@@ -207,6 +234,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.785438267896385
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                             new VenueEntity
                     {
@@ -221,6 +251,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.738935754404473
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                               new VenueEntity
                     {
@@ -235,6 +268,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.930290722296654
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                                 new VenueEntity
                     {
@@ -249,6 +285,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.807260181389573
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -263,6 +302,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.8812710813888
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -277,6 +319,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.854355654407353
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -291,6 +336,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.851711925566097
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -305,6 +353,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.90366591207361
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -319,6 +370,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.873272822322452
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -333,6 +387,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.871181110225415
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -347,6 +404,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.81952161207597
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -361,6 +421,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.874485305093135
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -375,6 +438,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.838084412129053
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                      new VenueEntity
                     {
@@ -389,6 +455,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.89889951207688
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -403,6 +472,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.81120361207433
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -417,6 +489,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.931455654404786
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -431,6 +506,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.78519693581391
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -445,6 +523,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.756107725569407
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -459,6 +540,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.919209096731304
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -473,6 +557,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.70594625440496
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -487,6 +574,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.93143419673309
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -501,6 +591,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.884327381387532
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     },
                       new VenueEntity
                     {
@@ -515,6 +608,9 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Longitude = 16.84595969673091
                         },
                         TenantId = Tenant1Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     }
 
 
@@ -539,7 +635,10 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                              Latitude = 45.8075,
                              Longitude = 15.9871
                          },
-                         TenantId = Tenant2Id,                    
+                         TenantId = Tenant2Id,
+                        Capacity = 100,
+                        Price = 400,
+                        SecurityDeposit = 50
                     }
                 }
             });
