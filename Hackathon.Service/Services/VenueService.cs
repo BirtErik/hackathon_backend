@@ -8,6 +8,7 @@ using Hackathon.Service.DAL.Entities.Models;
 using Hackathon.Service.DAL.Interfaces;
 using Hackathon.Service.DAL.Models;
 using Hackathon.Service.Models.Constants;
+using Hackathon.Service.Models.Keycloak.Requests;
 using Hackathon.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -94,7 +95,7 @@ public class VenueService : IVenueService
         {
             // Create user account, then create reservation and send email about login info
             // with initial password and reservation info
-            var userInfo = new
+            var userInfo = new UserInfoRequest
             {
                 Email = request.Email,
                 FirstName = request.FirstName,
@@ -106,7 +107,7 @@ public class VenueService : IVenueService
             ReservationRequestEntity reservationRequestEntity = new()
             {
                 TenantId = venueEntity.TenantId,
-                UserId = (Guid)newUserInfo.UserId,
+                UserId = newUserInfo.UserId,
                 VenueId = request.VenueId,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
