@@ -46,25 +46,7 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                             Latitude = 45.9028,
                             Longitude = 16.8481
                         },
-                        TenantId = Tenant1Id,
-                        Rooms = new[] {
-                            new VenueRoomEntity
-                            {
-                                Id = Guid.NewGuid(),
-                                Name = "Sala",
-                                Description = "Unutarnji smjestaj.",
-                                Capacity = 200,
-                                IsRentable = true
-                            },
-                            new VenueRoomEntity
-                            {
-                                Id = Guid.NewGuid(),
-                                Name = "Terasa",
-                                Description = "Vanjska natkrivena terasa.",
-                                IsRentable = true,
-                                Capacity = 100
-                            }
-                        }
+                        TenantId = Tenant1Id,        
                     }
                 }
             });
@@ -87,25 +69,7 @@ public class TestDataSeedingContext : BaseDbContext<TestDataSeedingContext>
                              Latitude = 45.8075,
                              Longitude = 15.9871
                          },
-                         TenantId = Tenant2Id,
-                         Rooms = new[] {
-                             new VenueRoomEntity
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Name = "Dvorana 1",
-                                    Description = "Dvorana za konferencije.",
-                                    Capacity = 200,
-                                    IsRentable = true
-                                },
-                                new VenueRoomEntity
-                                {
-                                    Id = Guid.NewGuid(),
-                                    Name = "Dvorana 2",
-                                    Description = "Dvorana za sportske događaje.",
-                                    IsRentable = false,
-                                    Capacity = 20000
-                                }
-                            }
+                         TenantId = Tenant2Id,                    
                     }
                 }
             });

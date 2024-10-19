@@ -25,12 +25,6 @@ public class ListVenueResultData
     public required string Description { get; set; }
 
     /// <summary>
-    /// Capacity: Capacity of a Venue
-    /// </summary>
-    [JsonPropertyName("capacity")]
-    public required int Capacity { get; set; }
-
-    /// <summary>
     /// IsRentable: IsRentable flag of a Venue
     /// </summary>
     [JsonPropertyName("isRentable")]
@@ -41,10 +35,4 @@ public class ListVenueResultData
     /// </summary>
     [JsonPropertyName("location")]
     public required Location Location { get; set; }
-
-    /// <summary>
-    /// Rooms: Rooms of a Venue
-    /// </summary>
-    [JsonPropertyName("rooms")]
-    public required List<VenueRoom> Rooms { get; set; }
 }

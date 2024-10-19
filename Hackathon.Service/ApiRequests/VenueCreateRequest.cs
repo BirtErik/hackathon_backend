@@ -19,12 +19,6 @@ public class VenueCreateRequest
     public string? Description { get; set; }
 
     /// <summary>
-    /// Capacity: Capacity of a whole Venue
-    /// </summary>
-    [JsonPropertyName("capacity")]
-    public int Capacity { get; set; }
-
-    /// <summary>
     /// IsRentable: IsRentable flag of a Venue
     /// </summary>
     [JsonPropertyName("isRentable")]
@@ -35,10 +29,4 @@ public class VenueCreateRequest
     /// </summary>
     [JsonPropertyName("location")]
     public Location Location { get; set; }
-
-    /// <summary>
-    /// Rooms: Venue rooms
-    /// </summary>
-    [JsonPropertyName("rooms")]
-    public List<VenueRoom>? Rooms { get; set; }
 }

@@ -16,7 +16,6 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ConfigureVenueEntity(modelBuilder);
-        ConfigureVenueRoomEntity(modelBuilder);
         ConfigureTenantEntity(modelBuilder);
         ConfigureVenueReservationModel(modelBuilder);
 
@@ -33,7 +32,6 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
         modelBuilder.Entity<VenueEntity>().Property(x => x.IsRentable).IsRequired();
         modelBuilder.Entity<VenueEntity>().Property(x => x.Location).IsRequired();
         modelBuilder.Entity<VenueEntity>().Property(x => x.TenantId).IsRequired();
-        modelBuilder.Entity<VenueEntity>().HasMany(x => x.Rooms).WithOne().IsRequired().HasForeignKey(x => x.VenueId);
 
         // Configure the Location property as a JSON column
         modelBuilder.Entity<VenueEntity>()
@@ -65,16 +63,6 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
             .OnDelete(DeleteBehavior.Cascade);
     }
 
-    private static void ConfigureVenueRoomEntity(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<VenueRoomEntity>().HasKey(x => x.Id);
-        modelBuilder.Entity<VenueRoomEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<VenueRoomEntity>().Property(x => x.Name).IsRequired();
-        modelBuilder.Entity<VenueRoomEntity>().Property(x => x.Description).IsRequired();
-        modelBuilder.Entity<VenueRoomEntity>().Property(x => x.Capacity).IsRequired();
-        modelBuilder.Entity<VenueRoomEntity>().Property(x => x.IsRentable).IsRequired();
-    }
-
     private static void ConfigureTenantEntity(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TenantEntity>().HasKey(x => x.Id);
@@ -98,7 +86,6 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
 
     public DbSet<TenantEntity> Tenants { get; set; } = null!;
     public DbSet<VenueEntity> Venues { get; set; } = null!;
-    public DbSet<VenueRoomEntity> VenueRooms { get; set; } = null!;
     public DbSet<VenueReservationEntity> VenueReservations { get; set; } = null!;
     public DbSet<VenueReservationItemEntity> VenueReservationItems { get; set; } = null!;
     public DbSet<VenueItemEntity> venueItemEntities { get; set; } = null!;

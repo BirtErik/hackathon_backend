@@ -22,10 +22,4 @@ public class VenueUpdateRequest
     /// </summary>
     [JsonPropertyName("isRentable")]
     public bool IsRentable { get; set; }
-
-    /// <summary>
-    /// Rooms: Venue rooms
-    /// </summary>
-    [JsonPropertyName("rooms")]
-    public List<VenueRoom>? Rooms { get; set; }
 }

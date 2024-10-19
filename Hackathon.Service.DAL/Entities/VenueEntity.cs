@@ -20,8 +20,6 @@ public class VenueEntity : BaseEntity
     [Column("location")]
     public required Location Location { get; set; }
 
-    public required ICollection<VenueRoomEntity> Rooms { get; set; }
-
     public ICollection<VenueItemEntity> Items { get; set; } = new List<VenueItemEntity>();
 
     public ICollection<VenueReservationEntity> Reservations { get; set; } = new List<VenueReservationEntity>();

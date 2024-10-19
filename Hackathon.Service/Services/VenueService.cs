@@ -43,14 +43,6 @@ public class VenueService : IVenueService
             },
             TenantId = userInfo.TenantId!.Value,
             // TODO: Implement CreatedBy = Repo.GetCurrentUserInfo().UserId,
-            Rooms = request.Rooms!.Select(x => new VenueRoomEntity
-            {
-                Name = x.Name!,
-                Description = x.Description!,
-                Capacity = (int)x.Capacity!,
-                IsRentable = x.IsRentable
-
-            }).ToList()
         };
 
         await Repo.InsertAsync(venueEntity);
@@ -110,23 +102,9 @@ public class VenueService : IVenueService
     {
         VenueEntity? venueEntity = await GetVenueEntityByIdAsync(id);
 
-        List<VenueRoomEntity> venueRoomEntities = new();
-
-        if (request.Rooms != null)
-        {
-            venueRoomEntities = request.Rooms.Select(t => new VenueRoomEntity
-            {
-                Name = t.Name!,
-                Description = t.Description!,
-                Capacity = (int)t.Capacity!,
-                IsRentable = t.IsRentable
-            }).ToList();
-        }
-
         venueEntity.Name = request.Name!;
         venueEntity.Description = request.Description!;
         venueEntity.IsRentable = request.IsRentable;
-        venueEntity.Rooms = venueRoomEntities;
 
         Repo.Update(venueEntity);
         await Repo.SaveChangesAsync();
@@ -138,7 +116,6 @@ public class VenueService : IVenueService
         int skip = ((queryParams.Page < 1 ? 1 : queryParams.Page) - 1) * take;
 
         var venueQuery = Repo.AsQueryable<VenueEntity>()
-                                .Include(v => v.Rooms)
                                 .AsNoTracking();
 
         if (!string.IsNullOrEmpty(queryParams.Search))
@@ -158,16 +135,8 @@ public class VenueService : IVenueService
             Id = x.Id,
             Name = x.Name,
             Description = x.Description,
-            Capacity = x.Rooms.Sum(y => y.Capacity),
             IsRentable = x.IsRentable,
             Location = x.Location,
-            Rooms = x.Rooms.Select(y => new VenueRoom
-            {
-                Name = y.Name,
-                Description = y.Description,
-                Capacity = y.Capacity,
-                IsRentable = y.IsRentable
-            }).ToList()
         }).ToList();
 
         ListVenueResult result = new()
@@ -182,8 +151,6 @@ public class VenueService : IVenueService
     public async Task<ListVenueResult> ListAllByTenanatIdAsync(Guid id)
     {
         var venueQuery = Repo.AsQueryable<VenueEntity>()
-            .Include(v => v.Rooms)
-            .Where(x => x.TenantId == id)
             .AsNoTracking();
 
         List<ListVenueResultData> contents = (await venueQuery.ToListAsync()).Select(x => new ListVenueResultData
@@ -191,16 +158,8 @@ public class VenueService : IVenueService
             Id = x.Id,
             Name = x.Name,
             Description = x.Description,
-            Capacity = x.Rooms.Sum(y => y.Capacity),
             IsRentable = x.IsRentable,
             Location = x.Location,
-            Rooms = x.Rooms.Select(y => new VenueRoom
-            {
-                Name = y.Name,
-                Description = y.Description,
-                Capacity = y.Capacity,
-                IsRentable = y.IsRentable
-            }).ToList()
         }).ToList();
 
         int total = venueQuery.Count();
@@ -285,8 +244,6 @@ public class VenueService : IVenueService
     private async Task<VenueEntity> GetVenueEntityByIdAsync(Guid id)
     {
         VenueEntity? venueEntity = await Repo.AsQueryable<VenueEntity>()
-           .Include(x => x.Rooms)
-           .Where(x => x.Id == id)
            .FirstOrDefaultAsync();
 
         if (venueEntity == null)

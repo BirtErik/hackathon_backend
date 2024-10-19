@@ -14,15 +14,7 @@ public static class EntityToResult
             Name = venueEntity.Name,
             Description = venueEntity.Description,
             IsRentable = venueEntity.IsRentable,
-            Location = venueEntity.Location,
-            Capacity = venueEntity.Rooms.Sum(x => x.Capacity),
-            Rooms = venueEntity.Rooms.Select(x => new VenueRoom
-            {
-                Name = x.Name,
-                Description = x.Description,
-                Capacity = x.Capacity,
-                IsRentable = x.IsRentable
-            }).ToList()
+            Location = venueEntity.Location,     
         };
     }
 }
