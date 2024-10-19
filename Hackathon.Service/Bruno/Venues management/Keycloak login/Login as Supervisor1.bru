@@ -1,0 +1,18 @@
+meta {
+  name: Login as Supervisor1
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:9080/realms/venues-management/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: password
+  client_id: venues-management-client
+  password: supervisor1
+  username: supervisor1
+}
