@@ -1,4 +1,6 @@
 ﻿using Hackathon.Service.ApiRequests;
+using Hackathon.Service.Models.Keycloak.Requests;
+using Hackathon.Service.Models.Keycloak.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hackathon.Service.Services.Interfaces;
@@ -11,7 +13,7 @@ public interface IUserService
 
     Task<Guid> CreateCustodianAsync(CustodianCreateRequest request);
 
-    Task<dynamic> CreateUserAsync(dynamic request);
+    Task<UserDataResult> CreateUserAsync(UserInfoRequest request);
 
     Task<string> GetKeycloakAccessToken();
 

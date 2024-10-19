@@ -1,5 +1,8 @@
 ﻿using Hackathon.Service.ApiRequests;
 using Hackathon.Service.ApiRequests.Models;
+using Hackathon.Service.Models.Keycloak;
+using Hackathon.Service.Models.Keycloak.Requests;
+using Hackathon.Service.Models.Keycloak.Results;
 using Hackathon.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
@@ -98,7 +101,7 @@ public class UserService : IUserService
         return Guid.Parse(userId);
     }
 
-    public async Task<dynamic> CreateUserAsync(dynamic request)
+    public async Task<UserDataResult> CreateUserAsync(UserInfoRequest request)
     {
         var client = HttpClientFactory.CreateClient();
         var token = await GetKeycloakAccessToken();
@@ -115,7 +118,7 @@ public class UserService : IUserService
             lastName = request.LastName,
             enabled = true,
             credentials = new[]
-            {
+                {
                 new
                 {
                     type = "password",
@@ -131,9 +134,9 @@ public class UserService : IUserService
         var locationHeader = response.Headers.Location;
         var userId = locationHeader.Segments.Last(); // This will get the user ID
 
-        var userData = new
+        var userData = new UserDataResult
         {
-            UserId = userId,
+            UserId = Guid.Parse(userId),
             Username = request.Email,
             Email = request.Email,
             Password = randomPassword
@@ -141,7 +144,6 @@ public class UserService : IUserService
 
         return userData;
     }
-
 
     public async Task<Guid> CreateCustodianAsync(CustodianCreateRequest request)
     {
