@@ -47,7 +47,7 @@ public class SupervisorController : SupervisorControllerDoc
     /// Endpoint that gets all Venues for Supervisor's tenantId
     /// </summary>
     [HttpGet("venues/all")]
-    public async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
+    public override async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
     {
         return await VenueService.ListAllItemsAsync();
     }
