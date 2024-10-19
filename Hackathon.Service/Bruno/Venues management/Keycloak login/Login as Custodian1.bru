@@ -1,0 +1,18 @@
+meta {
+  name: Login as Custodian1
+  type: http
+  seq: 4
+}
+
+post {
+  url: http://localhost:9080/realms/venues-management/protocol/openid-connect/token
+  body: formUrlEncoded
+  auth: none
+}
+
+body:form-urlencoded {
+  grant_type: password
+  client_id: venues-management-client
+  password: custodian1
+  username: custodian1
+}
