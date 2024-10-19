@@ -13,6 +13,11 @@ public abstract class SupervisorControllerDoc : BaseController
     [ProducesResponseType(typeof(ErrorDetailsResult), StatusCodes.Status409Conflict)]
     public abstract Task<ActionResult> CreateCustodian([FromServices] IValidator<CustodianCreateRequest> validator, [FromBody] CustodianCreateRequest request);
 
+
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public abstract Task<ActionResult<ListVenueItemResult>> ListAllVenueItems();
+
+
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ErrorDetailsResult), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ErrorDetailsResult), StatusCodes.Status409Conflict)]

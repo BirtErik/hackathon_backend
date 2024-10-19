@@ -9,7 +9,7 @@ public interface IVenueService
 {
     Task<Guid> CreateAsync(VenueCreateRequest request);
 
-    Task<ActionResult> CreateReservationAsync(VenueReservationCreateRequest request);
+    Task<ActionResult> CreateReservationRequestAsync(ReservationRequestCreateRequest request);
 
     Task UpdateAsync(Guid id, VenueUpdateRequest request);
 
@@ -18,6 +18,8 @@ public interface IVenueService
     Task<ListVenueResult> ListAllByTenanatIdAsync(Guid id);
 
     Task<ListVenueItemResult> ListAllItemsAsync();
+
+    Task<ListReservationRequestResult> ListAllReservationRequests(ReservationRequestQueryParams queryParams);
 
     Task<VenueResult> GetVenueByIdAsync(Guid id);
 

@@ -1,5 +1,4 @@
-﻿using Hackathon.Service.ApiRequests.Models;
-using Hackathon.Service.DAL.Entities.Models;
+﻿using Hackathon.Service.DAL.Entities.Models;
 using System.Text.Json.Serialization;
 
 namespace Hackathon.Service.ApiResults;
@@ -29,7 +28,7 @@ public class ListVenueResultData
     /// </summary>
     [JsonPropertyName("isRentable")]
     public required bool IsRentable { get; set; }
-    
+
     /// <summary>
     /// Location: Location of a Venue
     /// </summary>

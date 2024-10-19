@@ -48,6 +48,25 @@ public class UserSeedService : IUserSeedService
             Console.WriteLine(e.Message);
         }
 
+        // Create Mayor
+        try
+        {
+            dynamic mayor = new
+            {
+                Username = "mayor",
+                Email = "mayor@vm.com",
+                Password = "mayor",
+                FirstName = "Dario",
+                LastName = "Hrebak",
+                TenantId = TestDataSeedingContext.Tenant1Id
+            };
+            await CreateMayor(mayor);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
         // Create Supervisors
         try
         {
@@ -127,6 +146,52 @@ public class UserSeedService : IUserSeedService
         {
             await CreateCustodian(custodian);
         }
+    }
+
+    private async Task CreateMayor(dynamic mayor)
+    {
+        var client = HttpClientFactory.CreateClient();
+        var token = await UserService.GetKeycloakAccessToken();
+
+        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+
+        var newUser = new
+        {
+            username = mayor.Username,
+            email = mayor.Email,
+            firstName = mayor.FirstName,
+            lastName = mayor.LastName,
+            enabled = true,
+            attributes = new
+            {
+                tenantId = new[] { mayor.TenantId }
+            },
+            credentials = new[]
+            {
+                new
+                {
+                    type = "password",
+                    value = mayor.Password,
+                    temporary = false
+                }
+            }
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(newUser), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync($"{KeycloakUrl}/users", content);
+
+        // TODO: Handle 409 conflict and other exceptions
+        var locationHeader = response.Headers.Location;
+
+        if (locationHeader == null)
+        {
+            return;
+        }
+
+        var userId = locationHeader.Segments.Last(); // This will get the user ID
+
+        // Assign Supervisor role to user
+        await UserService.AssignRoleToUser(userId, "Mayor"); // TODO: Add enum
     }
 
     private async Task CreateSupervisor(dynamic supervisor)

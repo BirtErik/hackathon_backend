@@ -21,21 +21,20 @@ public class PublicController : PublicControllerDoc
         VenueService = venueService;
     }
 
-    // endpoint for creating reservations
     /// <summary>
-    /// Endpoint that creates a Reservation
+    /// Endpoint that creates a Reservation Request
     /// </summary>
-    [HttpPost("reservations")]
-    public async Task<ActionResult> CreateReservation([FromBody] VenueReservationCreateRequest request)
+    [HttpPost("reservation-requests")]
+    public override async Task<ActionResult> CreateReservationRequest([FromBody] ReservationRequestCreateRequest request)
     {
-        return await VenueService.CreateReservationAsync(request);
+        return await VenueService.CreateReservationRequestAsync(request);
     }
 
     /// <summary>
     /// Endpoint that gets all Tenants
     /// </summary>
     [HttpGet("tenants/all")]
-    public async Task<ActionResult<ListTenantItemResult>> ListAllTenantItems()
+    public override async Task<ActionResult<ListTenantItemResult>> ListAllTenantItems()
     {
         return await TenantService.ListAllItemsAsync();
     }
@@ -44,7 +43,7 @@ public class PublicController : PublicControllerDoc
     /// Endpoint that gets all Venues by TenantId
     /// </summary>
     [HttpGet("tenants/{id:guid}/venues")]
-    public async Task<ActionResult<ListVenueResult>> ListAllVenuesByTenantId(Guid id)
+    public override async Task<ActionResult<ListVenueResult>> ListAllVenuesByTenantId(Guid id)
     {
         return await VenueService.ListAllByTenanatIdAsync(id);
     }

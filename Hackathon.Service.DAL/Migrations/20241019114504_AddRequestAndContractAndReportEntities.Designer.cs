@@ -3,6 +3,7 @@ using System;
 using Hackathon.Service.DAL.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Hackathon.Service.DAL.Migrations
 {
     [DbContext(typeof(ServiceDbContext))]
-    partial class ServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241019114504_AddRequestAndContractAndReportEntities")]
+    partial class AddRequestAndContractAndReportEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,10 +197,6 @@ namespace Hackathon.Service.DAL.Migrations
                         .HasColumnType("text")
                         .HasColumnName("street_address");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("tenant_id");
-
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("updated_at");
@@ -211,8 +210,6 @@ namespace Hackathon.Service.DAL.Migrations
                         .HasColumnName("venue_id");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("TenantId");
 
                     b.HasIndex("VenueId");
 
@@ -402,12 +399,6 @@ namespace Hackathon.Service.DAL.Migrations
 
             modelBuilder.Entity("Hackathon.Service.DAL.Entities.ReservationRequestEntity", b =>
                 {
-                    b.HasOne("Hackathon.Service.DAL.Entities.TenantEntity", null)
-                        .WithMany("ReservationRequests")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("Hackathon.Service.DAL.Entities.VenueEntity", null)
                         .WithMany("ReservationRequests")
                         .HasForeignKey("VenueId")
@@ -435,8 +426,6 @@ namespace Hackathon.Service.DAL.Migrations
 
             modelBuilder.Entity("Hackathon.Service.DAL.Entities.TenantEntity", b =>
                 {
-                    b.Navigation("ReservationRequests");
-
                     b.Navigation("Venues");
                 });
 

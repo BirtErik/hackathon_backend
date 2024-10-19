@@ -1,6 +1,5 @@
 ﻿using Hackathon.Service.ApiQueryParams;
 using Hackathon.Service.ApiRequests;
-using Hackathon.Service.ApiRequests.Models;
 using Hackathon.Service.ApiResults;
 using Hackathon.Service.Common.Exceptions;
 using Hackathon.Service.Converters;
@@ -51,32 +50,41 @@ public class VenueService : IVenueService
         return venueEntity.Id;
     }
 
-    public async Task<ActionResult> CreateReservationAsync(VenueReservationCreateRequest request)
+    public async Task<ActionResult> CreateReservationRequestAsync(ReservationRequestCreateRequest request)
     {
         // Check if User with provided email exists
         Guid? userId = await UserService.GetUserIdByEmail(request.Email);
+
+        // Check if provided Venue exists
+        VenueEntity venueEntity = await GetVenueEntityByIdAsync(request.VenueId);
 
         if (userId != null)
         {
             // TODO: Check if there is already an reservation for provided date
             // TODO: Check does provided venueId exist, throw exception if doesn't
 
-            // Create reservation for user and send email info about reservation
-            VenueReservationEntity venueReservationEntity = new()
+            ReservationRequestEntity reservationRequestEntity = new()
             {
-                ContactEmail = request.Email,
+                TenantId = venueEntity.TenantId,
+                UserId = userId.Value,
+                VenueId = request.VenueId,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                City = request.City,
+                StreetAddress = request.StreetAddress,
+                Oib = request.Oib,
+                Phone = request.Phone,
+                BankName = request.BankName,
+                Iban = request.Iban,
+                Purpose = request.Purpose,
                 StartDate = request.StartDate,
                 EndDate = request.EndDate,
-                UserId = userId.Value,
-                VenueId = request.VenueId
-                // TODO: Add reservation items
             };
 
-            await Repo.InsertAsync(venueReservationEntity);
+            await Repo.InsertAsync(reservationRequestEntity);
             await Repo.SaveChangesAsync();
 
             // TODO: Send email
-
             return new OkResult();
         }
         else
@@ -92,6 +100,26 @@ public class VenueService : IVenueService
 
             var newUserInfo = await UserService.CreateUserAsync(userInfo);
 
+            ReservationRequestEntity reservationRequestEntity = new()
+            {
+                TenantId = venueEntity.TenantId,
+                UserId = newUserInfo.Password,
+                VenueId = request.VenueId,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                City = request.City,
+                StreetAddress = request.StreetAddress,
+                Oib = request.Oib,
+                Phone = request.Phone,
+                BankName = request.BankName,
+                Iban = request.Iban,
+                Purpose = request.Purpose,
+                StartDate = request.StartDate,
+                EndDate = request.EndDate,
+            };
+
+            await Repo.InsertAsync(reservationRequestEntity);
+            await Repo.SaveChangesAsync();
 
             // TODO: Send email
             return new OkResult();
@@ -140,6 +168,51 @@ public class VenueService : IVenueService
         }).ToList();
 
         ListVenueResult result = new()
+        {
+            Data = contents,
+            Total = total,
+        };
+
+        return result;
+    }
+
+    public async Task<ListReservationRequestResult> ListAllReservationRequests(ReservationRequestQueryParams queryParams)
+    {
+        int take = (queryParams.Take <= 0 ? ApiConstants.Pagination.MaxPageSize : queryParams.Take);
+        int skip = ((queryParams.Page < 1 ? 1 : queryParams.Page) - 1) * take;
+
+        var reservationRequest = Repo.AsQueryable<ReservationRequestEntity>()
+                                .AsNoTracking();
+
+        if (!string.IsNullOrEmpty(queryParams.Search))
+        {
+            string pattern = $"%{queryParams.Search}%";
+
+            reservationRequest = reservationRequest
+                .Where(x => EF.Functions.Like(x.FirstName, pattern) || EF.Functions.Like(x.LastName, pattern));
+        }
+
+        int total = reservationRequest.Count();
+
+        reservationRequest = reservationRequest.Skip(skip).Take(take);
+
+        List<ListReservationRequestResultData> contents = (await reservationRequest.ToListAsync()).Select(x => new ListReservationRequestResultData
+        {
+            Id = x.Id,
+            FirstName = x.FirstName,
+            LastName = x.LastName,
+            StreetAddress = x.StreetAddress,
+            City = x.City,
+            Iban = x.Iban,
+            BankName = x.BankName,
+            Phone = x.Phone,
+            Purpose = x.Purpose,
+            Oib = x.Oib,
+            StartDate = x.StartDate,
+            EndDate = x.EndDate,
+        }).ToList();
+
+        ListReservationRequestResult result = new()
         {
             Data = contents,
             Total = total,
@@ -212,11 +285,11 @@ public class VenueService : IVenueService
 
     public async Task<ListVenueReservationResult> GetVenueReservationsByVenueIdAsync(Guid id)
     {
-        var venueReservationsQuery = Repo.AsQueryable<VenueReservationEntity>()
+        var venueReservationsQuery = Repo.AsQueryable<ContractEntity>()
             .Where(x => x.VenueId == id)
             .AsNoTracking();
 
-        List<VenueReservationEntity> venueReservations = await venueReservationsQuery.ToListAsync();
+        List<ContractEntity> venueReservations = await venueReservationsQuery.ToListAsync();
 
         List<ListVenueReservationResultData> venueReservationItems = venueReservations.Select(x => new ListVenueReservationResultData
         {

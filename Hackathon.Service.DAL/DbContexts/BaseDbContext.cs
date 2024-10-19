@@ -15,12 +15,22 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        ConfigureVenueEntity(modelBuilder);
         ConfigureTenantEntity(modelBuilder);
-        ConfigureVenueReservationModel(modelBuilder);
+        ConfigureVenueEntity(modelBuilder);
+        ConfigureReservationRequestEntity(modelBuilder);
+        ConfigureContractEntity(modelBuilder);
+        ConfigureVenueReportEntity(modelBuilder);
 
         modelBuilder.HasDefaultSchema(DefaultDbSchema);
         base.OnModelCreating(modelBuilder);
+    }
+
+    private static void ConfigureTenantEntity(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TenantEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<TenantEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
+        modelBuilder.Entity<TenantEntity>().Property(x => x.Name).IsRequired();
+        modelBuilder.Entity<TenantEntity>().Property(x => x.Description).IsRequired();
     }
 
     private static void ConfigureVenueEntity(ModelBuilder modelBuilder)
@@ -47,47 +57,62 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
         .HasOne<TenantEntity>() // No navigation property, just specify the related entity
         .WithMany(t => t.Venues) // You can still reference the collection if you have it
         .HasForeignKey(v => v.TenantId); // Specify the foreign key
+    }
 
-        // Configure the relationship between VenueEntity and VenueItemEntity
-        modelBuilder.Entity<VenueEntity>()
-            .HasMany(v => v.Items)
-            .WithOne()
-            .HasForeignKey(i => i.VenueId)
-            .OnDelete(DeleteBehavior.Cascade);
+    private static void ConfigureReservationRequestEntity(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ReservationRequestEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<ReservationRequestEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
+        // todo: define required properties
+        modelBuilder.Entity<ReservationRequestEntity>().Property(x => x.TenantId).IsRequired();
 
-        // Configure relationship between VenueEntity and VenueReservationEntity
-        modelBuilder.Entity<VenueReservationEntity>()
+
+
+        // Configure relationship between VenueEntity and ReservationRequestEntity
+        modelBuilder.Entity<ReservationRequestEntity>()
+            .HasOne<VenueEntity>()  // Each ReservationRequest is related to one Venue
+            .WithMany(v => v.ReservationRequests)  // One Venue can have many ReservationRequests
+            .HasForeignKey(rr => rr.VenueId)  // The foreign key is VenueId
+            .OnDelete(DeleteBehavior.Cascade);  // Cascade deletion when a venue is deleted
+
+        // Configure relationship between TenantEntity and ReservationRequestEntity
+        modelBuilder.Entity<ReservationRequestEntity>()
+            .HasOne<TenantEntity>()  // Each ReservationRequest is related to one Tenant
+            .WithMany(t => t.ReservationRequests)  // One Tenant can have many ReservationRequests
+            .HasForeignKey(rr => rr.TenantId)  // The foreign key is TenantId
+            .OnDelete(DeleteBehavior.Restrict);  // Restrict deletion of a tenant if there are reservation requests
+    }
+
+    private static void ConfigureContractEntity(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<ContractEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<ContractEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
+        // todo: define required properties
+
+        // Configure relationship between VenueEntity and ContractEntity
+        modelBuilder.Entity<ContractEntity>()
             .HasOne<VenueEntity>()
-            .WithMany(v => v.Reservations)
+            .WithMany(v => v.Contracts)
             .HasForeignKey(vr => vr.VenueId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 
-    private static void ConfigureTenantEntity(ModelBuilder modelBuilder)
+    private static void ConfigureVenueReportEntity(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<TenantEntity>().HasKey(x => x.Id);
-        modelBuilder.Entity<TenantEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<TenantEntity>().Property(x => x.Name).IsRequired();
-        modelBuilder.Entity<TenantEntity>().Property(x => x.Description).IsRequired();
-    }
+        modelBuilder.Entity<VenueReportEntity>().HasKey(x => x.Id);
+        modelBuilder.Entity<VenueReportEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
+        // todo: define required properties
 
-    private void ConfigureVenueReservationModel(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<VenueReservationEntity>().HasKey(x => x.Id);
-        modelBuilder.Entity<VenueReservationEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
-        modelBuilder.Entity<VenueReservationEntity>().Property(x => x.VenueId).IsRequired();
-        modelBuilder.Entity<VenueReservationEntity>().HasMany(x => x.ReservationItems)
-            .WithOne()
-            .IsRequired()
-            .HasForeignKey(x => x.VenueReservationId);
-        modelBuilder.Entity<VenueReservationEntity>().Property(x => x.StartDate).IsRequired();
-        modelBuilder.Entity<VenueReservationEntity>().Property(x => x.EndDate).IsRequired();
+        modelBuilder.Entity<VenueReportEntity>()
+           .HasOne<VenueEntity>()  // Each VenueReport is related to one Venue
+           .WithMany(v => v.VenueReports)  // One Venue can have many VenueReports
+           .HasForeignKey(vr => vr.VenueId)  // The foreign key is VenueId
+           .OnDelete(DeleteBehavior.Cascade);  // Cascade deletion when a venue is deleted
     }
 
     public DbSet<TenantEntity> Tenants { get; set; } = null!;
     public DbSet<VenueEntity> Venues { get; set; } = null!;
-    public DbSet<VenueReservationEntity> VenueReservations { get; set; } = null!;
-    public DbSet<VenueReservationItemEntity> VenueReservationItems { get; set; } = null!;
-    public DbSet<VenueItemEntity> venueItemEntities { get; set; } = null!;
-
+    public DbSet<ContractEntity> Contracts { get; set; } = null!;
+    public DbSet<ReservationRequestEntity> ReservationRequests { get; set; } = null!;
+    public DbSet<VenueReportEntity> VenueReports { get; set; } = null!;
 }

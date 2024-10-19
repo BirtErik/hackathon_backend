@@ -33,7 +33,7 @@ public class AdminController : AdminControllerDoc
     /// <param name="request"></param>
     /// <param name="validator"></param>
     [HttpPost("mayor")]
-    public async Task<IActionResult> CreateMayor([FromServices] IValidator<MayorCreateRequest> validator, [FromBody] MayorCreateRequest request)
+    public override async Task<ActionResult> CreateMayor([FromServices] IValidator<MayorCreateRequest> validator, [FromBody] MayorCreateRequest request)
     {
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -50,7 +50,7 @@ public class AdminController : AdminControllerDoc
     /// <param name="request"></param>
     /// <param name="validator"></param>
     [HttpPost("supervisor")]
-    public async Task<IActionResult> CreateSupervisor([FromServices] IValidator<SupervisorCreateRequest> validator, [FromBody] SupervisorCreateRequest request)
+    public override async Task<ActionResult> CreateSupervisor([FromServices] IValidator<SupervisorCreateRequest> validator, [FromBody] SupervisorCreateRequest request)
     {
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -67,7 +67,7 @@ public class AdminController : AdminControllerDoc
     /// <param name="request"></param>
     /// <param name="validator"></param>
     [HttpPost("custodian")]
-    public async Task<IActionResult> CreateCustodian([FromServices] IValidator<CustodianCreateRequest> validator, [FromBody] CustodianCreateRequest request)
+    public override async Task<ActionResult> CreateCustodian([FromServices] IValidator<CustodianCreateRequest> validator, [FromBody] CustodianCreateRequest request)
     {
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -84,7 +84,7 @@ public class AdminController : AdminControllerDoc
     /// <param name="request"></param>
     /// <param name="validator"></param>
     [HttpPost("tenant")]
-    public async Task<IActionResult> CreateTenant([FromServices] IValidator<TenantCreateRequest> validator, [FromBody] TenantCreateRequest request)
+    public override async Task<ActionResult> CreateTenant([FromServices] IValidator<TenantCreateRequest> validator, [FromBody] TenantCreateRequest request)
     {
         FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
         if (!validationResult.IsValid)
@@ -99,7 +99,7 @@ public class AdminController : AdminControllerDoc
     /// Endpoint that gets all Tenants
     /// </summary>
     [HttpGet("tenants/all")]
-    public async Task<ActionResult<ListTenantItemResult>> ListAllTenantItems()
+    public override async Task<ActionResult<ListTenantItemResult>> ListAllTenantItems()
     {
         return await TenantService.ListAllItemsAsync();
     }
@@ -108,7 +108,7 @@ public class AdminController : AdminControllerDoc
     /// Endpoint that gets all Venues
     /// </summary>
     [HttpGet("venues/all")]
-    public async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
+    public override async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
     {
         return await VenueService.ListAllItemsAsync();
     }

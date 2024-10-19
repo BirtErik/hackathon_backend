@@ -47,9 +47,24 @@ public class SupervisorController : SupervisorControllerDoc
     /// Endpoint that gets all Venues for Supervisor's tenantId
     /// </summary>
     [HttpGet("venues/all")]
-    public async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
+    public override async Task<ActionResult<ListVenueItemResult>> ListAllVenueItems()
     {
         return await VenueService.ListAllItemsAsync();
+    }
+
+    /// <summary>
+    /// Endpoint that gets Reservation Requests
+    /// </summary>
+    /// <param name="queryParams"></param>
+    /// <param name="validator"></param>
+    [HttpGet("reservation-requests")]
+    public async Task<ActionResult<ListReservationRequestResult>> ListAllReservationRequests([FromServices] IValidator<BaseQueryParams> validator, [FromQuery] ReservationRequestQueryParams queryParams)
+    {
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(queryParams);
+        if (!validationResult.IsValid)
+            throw new BadRequestAxHttpException(moreInfo: validationResult.Errors.ToSimpleMessageString());
+
+        return await VenueService.ListAllReservationRequests(queryParams);
     }
 
     /// <summary>
