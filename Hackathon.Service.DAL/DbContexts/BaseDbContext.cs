@@ -41,6 +41,7 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
         modelBuilder.Entity<VenueEntity>().Property(x => x.Description).IsRequired();
         modelBuilder.Entity<VenueEntity>().Property(x => x.IsRentable).IsRequired();
         modelBuilder.Entity<VenueEntity>().Property(x => x.Location).IsRequired();
+        modelBuilder.Entity<VenueEntity>().Property(x => x.Capacity).IsRequired();
         modelBuilder.Entity<VenueEntity>().Property(x => x.TenantId).IsRequired();
 
         // Configure the Location property as a JSON column

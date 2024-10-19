@@ -20,6 +20,15 @@ public class VenueEntity : BaseEntity
     [Column("location")]
     public required Location Location { get; set; }
 
+    [Column("capacity")]
+    public required int Capacity { get; set; }
+
+    [Column("price")]
+    public required double Price { get; set; }
+
+    [Column("security_deposit")]
+    public required double SecurityDeposit { get; set; }
+
     public ICollection<ReservationRequestEntity> ReservationRequests { get; set; } = new List<ReservationRequestEntity>();
 
     public ICollection<VenueReportEntity> VenueReports { get; set; } = new List<VenueReportEntity>();

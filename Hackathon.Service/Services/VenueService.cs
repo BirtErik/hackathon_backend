@@ -40,6 +40,9 @@ public class VenueService : IVenueService
                 Longitude = request.Location!.Longitude!,
                 FullAddress = request.Location!.FullAddress!,
             },
+            Capacity = request.Capacity,
+            Price = request.Price,
+            SecurityDeposit = request.SecurityDeposit,
             TenantId = userInfo.TenantId!.Value,
             // TODO: Implement CreatedBy = Repo.GetCurrentUserInfo().UserId,
         };

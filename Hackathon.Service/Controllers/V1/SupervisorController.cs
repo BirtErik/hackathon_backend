@@ -19,6 +19,7 @@ public class SupervisorController : SupervisorControllerDoc
 {
     private readonly IUserService UserService;
     private readonly IVenueService VenueService;
+    private readonly IContractService ContractService;
 
     public SupervisorController(IUserService userService, IVenueService venueService)
     {
@@ -125,6 +126,16 @@ public class SupervisorController : SupervisorControllerDoc
     public override async Task<ActionResult<VenueResult>> GetVenueByIdAsync(Guid id)
     {
         return await VenueService.GetVenueByIdAsync(id);
+    }
+
+    /// <summary>
+    /// Endpoint that initialize Contract from Reservation Request
+    /// </summary>
+    /// <param name="id"></param>
+    [HttpGet("contracts/{id:guid}")]
+    public async Task<ActionResult<Guid>> InitializeContract(Guid id)
+    {
+        return await ContractService.CreateContractFromReservationRequestAsync(id);
     }
 
     /// <summary>

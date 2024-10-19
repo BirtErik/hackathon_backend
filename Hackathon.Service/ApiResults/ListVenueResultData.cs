@@ -34,4 +34,22 @@ public class ListVenueResultData
     /// </summary>
     [JsonPropertyName("location")]
     public required Location Location { get; set; }
+
+    /// <summary>
+    /// Location: Capacity of a Venue
+    /// </summary>
+    [JsonPropertyName("capacity")]
+    public int Capacity { get; set; }
+
+    /// <summary>
+    /// Price: Price of a Venue rent
+    /// </summary>
+    [JsonPropertyName("price")]
+    public double Price { get; set; }
+
+    /// <summary>
+    /// SecurityDeposit: Security deposit for a Venue reservation
+    /// </summary>
+    [JsonPropertyName("securityDeposit")]
+    public double SecurityDeposit { get; set; }
 }
