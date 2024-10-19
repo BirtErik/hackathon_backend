@@ -103,7 +103,7 @@ public class VenueService : IVenueService
             ReservationRequestEntity reservationRequestEntity = new()
             {
                 TenantId = venueEntity.TenantId,
-                UserId = newUserInfo.Password,
+                UserId = (Guid)newUserInfo.UserId,
                 VenueId = request.VenueId,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
@@ -317,6 +317,7 @@ public class VenueService : IVenueService
     private async Task<VenueEntity> GetVenueEntityByIdAsync(Guid id)
     {
         VenueEntity? venueEntity = await Repo.AsQueryable<VenueEntity>()
+           .Where(x => x.Id == id)
            .FirstOrDefaultAsync();
 
         if (venueEntity == null)
