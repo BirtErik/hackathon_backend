@@ -4,6 +4,9 @@ namespace Hackathon.Service.DAL.Entities;
 
 public class ReservationRequestEntity : BaseEntity
 {
+    [Column("tenant_id")]
+    public required Guid TenantId { get; set; }
+
     [Column("venue_id")]
     public required Guid VenueId { get; set; }
 

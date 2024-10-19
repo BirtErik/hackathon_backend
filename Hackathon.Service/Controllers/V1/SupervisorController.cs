@@ -53,6 +53,21 @@ public class SupervisorController : SupervisorControllerDoc
     }
 
     /// <summary>
+    /// Endpoint that gets Reservation Requests
+    /// </summary>
+    /// <param name="queryParams"></param>
+    /// <param name="validator"></param>
+    [HttpGet("reservation-requests")]
+    public async Task<ActionResult<ListReservationRequestResult>> ListAllReservationRequests([FromServices] IValidator<BaseQueryParams> validator, [FromQuery] ReservationRequestQueryParams queryParams)
+    {
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(queryParams);
+        if (!validationResult.IsValid)
+            throw new BadRequestAxHttpException(moreInfo: validationResult.Errors.ToSimpleMessageString());
+
+        return await VenueService.ListAllReservationRequests(queryParams);
+    }
+
+    /// <summary>
     /// Endpoint that creates Venue
     /// </summary>
     /// <param name="request"></param>

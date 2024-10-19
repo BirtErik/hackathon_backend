@@ -35,10 +35,15 @@ public class ServiceDbContext : BaseDbContext<ServiceDbContext>
     {
         if (UserInfo != null)
         {
+            // Add global tenant filters
             if (UserInfo.Roles!.Contains("Supervisor"))
             {
                 modelBuilder.Entity<VenueEntity>().HasQueryFilter(v =>
                     v.TenantId == UserInfo.TenantId
+                );
+
+                modelBuilder.Entity<ReservationRequestEntity>().HasQueryFilter(rr =>
+                    rr.TenantId == UserInfo.TenantId
                 );
             }
         }

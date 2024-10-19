@@ -64,6 +64,7 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
         modelBuilder.Entity<ReservationRequestEntity>().HasKey(x => x.Id);
         modelBuilder.Entity<ReservationRequestEntity>().Property(x => x.Id).ValueGeneratedOnAdd();
         // todo: define required properties
+        modelBuilder.Entity<ReservationRequestEntity>().Property(x => x.TenantId).IsRequired();
 
 
 
@@ -73,6 +74,13 @@ public abstract class BaseDbContext<TDbContext> : DbContext where TDbContext : B
             .WithMany(v => v.ReservationRequests)  // One Venue can have many ReservationRequests
             .HasForeignKey(rr => rr.VenueId)  // The foreign key is VenueId
             .OnDelete(DeleteBehavior.Cascade);  // Cascade deletion when a venue is deleted
+
+        // Configure relationship between TenantEntity and ReservationRequestEntity
+        modelBuilder.Entity<ReservationRequestEntity>()
+            .HasOne<TenantEntity>()  // Each ReservationRequest is related to one Tenant
+            .WithMany(t => t.ReservationRequests)  // One Tenant can have many ReservationRequests
+            .HasForeignKey(rr => rr.TenantId)  // The foreign key is TenantId
+            .OnDelete(DeleteBehavior.Restrict);  // Restrict deletion of a tenant if there are reservation requests
     }
 
     private static void ConfigureContractEntity(ModelBuilder modelBuilder)

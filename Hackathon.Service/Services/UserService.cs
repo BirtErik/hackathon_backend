@@ -133,10 +133,10 @@ public class UserService : IUserService
 
         var userData = new
         {
-            userId,
-            username = request.Email,
-            email = request.Email,
-            password = randomPassword
+            UserId = userId,
+            Username = request.Email,
+            Email = request.Email,
+            Password = randomPassword
         };
 
         return userData;

@@ -19,6 +19,8 @@ public interface IVenueService
 
     Task<ListVenueItemResult> ListAllItemsAsync();
 
+    Task<ListReservationRequestResult> ListAllReservationRequests(ReservationRequestQueryParams queryParams);
+
     Task<VenueResult> GetVenueByIdAsync(Guid id);
 
     Task<ListVenueReservationResult> GetVenueReservationsByVenueIdAsync(Guid id);
