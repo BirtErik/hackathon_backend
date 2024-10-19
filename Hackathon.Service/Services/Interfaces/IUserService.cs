@@ -5,6 +5,8 @@ namespace Hackathon.Service.Services.Interfaces;
 
 public interface IUserService
 {
+    Task<Guid> CreateMayorAsync(MayorCreateRequest request);
+
     Task<Guid> CreateSupervisorAsync(SupervisorCreateRequest request);
 
     Task<Guid> CreateCustodianAsync(CustodianCreateRequest request);

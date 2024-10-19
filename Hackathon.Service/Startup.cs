@@ -20,7 +20,6 @@ public class Startup
 
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
         services.Configure<ApiBehaviorOptions>(options =>
@@ -90,6 +89,7 @@ public class Startup
         services.AddAuthorization(options =>
         {
             options.AddPolicy("AdminPolicy", policy => policy.RequireRole(RoleNames.Admin));
+            options.AddPolicy("MayorPolicy", policy => policy.RequireRole(RoleNames.Mayor));
             options.AddPolicy("SupervisorPolicy", policy => policy.RequireRole(RoleNames.Supervisor));
             options.AddPolicy("CustodianPolicy", policy => policy.RequireRole(RoleNames.Custodian));
             options.AddPolicy("UserPolicy", policy => policy.RequireRole(RoleNames.User));
@@ -100,7 +100,6 @@ public class Startup
         services.AddHttpClient();
         services.ConfigureCommon(dbConnString, false);
         services.ConfigureFluentValidation();
-        //services.ConfigureJsonOptions();
         services.AddControllers();
         services.ConfigureSwagger(Configuration);
         services.ConfigureDal(dbConnString);
@@ -114,7 +113,6 @@ public class Startup
         {
             options.Providers.Add<Microsoft.AspNetCore.ResponseCompression.GzipCompressionProvider>();
         });
-        //services.ConfigureOptions(Configuration);
         services.ConfigureCors();
         services.AddRouting(co =>
         {
@@ -162,6 +160,7 @@ public class Startup
             app.TestDataSeeding(ConfigurationUtils.GetDbConnectionString(Configuration));
         }
 
+        // Keycloak users seed
         if (!env.IsProduction())
         {
             using (var scope = services.CreateScope())
@@ -172,10 +171,8 @@ public class Startup
         }
 
         app.UseRouting();
-
         app.UseAuthentication();
         app.UseAuthorization();
-
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapDefaultControllerRoute();

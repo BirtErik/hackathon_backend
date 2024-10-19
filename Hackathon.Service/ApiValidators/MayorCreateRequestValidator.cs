@@ -3,9 +3,9 @@ using Hackathon.Service.ApiRequests;
 
 namespace Hackathon.Service.ApiValidators;
 
-public class SupervisorCreateRequestValidator : AbstractValidator<SupervisorCreateRequest>
+public class MayorCreateRequestValidator : AbstractValidator<MayorCreateRequest>
 {
-    public SupervisorCreateRequestValidator()
+    public MayorCreateRequestValidator()
     {
         // TODO: Add email validator
         RuleFor(x => x.Email).NotEmpty().WithMessage("Email is required");

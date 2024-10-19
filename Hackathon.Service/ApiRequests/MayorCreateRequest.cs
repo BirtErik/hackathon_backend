@@ -1,6 +1,6 @@
 ﻿namespace Hackathon.Service.ApiRequests;
 
-public class SupervisorCreateRequest
+public class MayorCreateRequest
 {
     public string Email { get; set; }
 

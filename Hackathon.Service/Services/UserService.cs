@@ -26,6 +26,77 @@ public class UserService : IUserService
         KeycloakClientSecret = Configuration.GetValue<string>("Keycloak:ClientSecret")!;
     }
 
+    public async Task<Guid> CreateMayorAsync(MayorCreateRequest request)
+    {
+        var client = HttpClientFactory.CreateClient();
+        var token = await GetKeycloakAccessToken();
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var newUser = new
+        {
+            username = request.Email,
+            email = request.Email,
+            firstName = request.FirstName,
+            lastName = request.LastName,
+            enabled = true,
+            attributes = new
+            {
+                tenantId = new[] { request.TenantId }
+            }
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(newUser), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync($"{KeycloakUrl}/users", content);
+
+        // TODO: Handle 409 conflict and other exceptions
+        var locationHeader = response.Headers.Location;
+        var userId = locationHeader.Segments.Last(); // This will get the user ID
+
+        // Set User password
+        await SetUserPassword(userId, request.Password);
+
+        // Assign Supervisor role to user
+        await AssignRoleToUser(userId, "Mayor");
+
+        return Guid.Parse(userId);
+    }
+
+    public async Task<Guid> CreateSupervisorAsync(SupervisorCreateRequest request)
+    {
+        var client = HttpClientFactory.CreateClient();
+        var token = await GetKeycloakAccessToken();
+
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+        var newUser = new
+        {
+            username = request.Email,
+            email = request.Email,
+            firstName = request.FirstName,
+            lastName = request.LastName,
+            enabled = true,
+            attributes = new
+            {
+                tenantId = new[] { request.TenantId }
+            }
+        };
+
+        var content = new StringContent(JsonSerializer.Serialize(newUser), Encoding.UTF8, "application/json");
+        var response = await client.PostAsync($"{KeycloakUrl}/users", content);
+
+        // TODO: Handle 409 conflict and other exceptions
+        var locationHeader = response.Headers.Location;
+        var userId = locationHeader.Segments.Last(); // This will get the user ID
+
+        // Set User password
+        await SetUserPassword(userId, request.Password);
+
+        // Assign Supervisor role to user
+        await AssignRoleToUser(userId, "Supervisor");
+
+        return Guid.Parse(userId);
+    }
 
     public async Task<dynamic> CreateUserAsync(dynamic request)
     {
@@ -108,41 +179,7 @@ public class UserService : IUserService
         return Guid.Parse(userId);
     }
 
-    public async Task<Guid> CreateSupervisorAsync(SupervisorCreateRequest request)
-    {
-        var client = HttpClientFactory.CreateClient();
-        var token = await GetKeycloakAccessToken();
 
-        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-
-        var newUser = new
-        {
-            username = request.Username,
-            email = request.Email,
-            firstName = request.FirstName,
-            lastName = request.LastName,
-            enabled = true,
-            attributes = new
-            {
-                tenantId = new[] { request.TenantId }  // TODO: Add guid from request
-            }
-        };
-
-        var content = new StringContent(JsonSerializer.Serialize(newUser), Encoding.UTF8, "application/json");
-        var response = await client.PostAsync($"{KeycloakUrl}/users", content);
-
-        // TODO: Handle 409 conflict and other exceptions
-        var locationHeader = response.Headers.Location;
-        var userId = locationHeader.Segments.Last(); // This will get the user ID
-
-        // Set User password
-        await SetUserPassword(userId, request.Password);
-
-        // Assign Supervisor role to user
-        await AssignRoleToUser(userId, "Supervisor");
-
-        return Guid.Parse(userId);
-    }
 
     public async Task<string> GetKeycloakAccessToken()
     {

@@ -28,6 +28,23 @@ public class AdminController : AdminControllerDoc
     }
 
     /// <summary>
+    /// Endpoint that creates Mayor
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="validator"></param>
+    [HttpPost("mayor")]
+    public async Task<IActionResult> CreateMayor([FromServices] IValidator<MayorCreateRequest> validator, [FromBody] MayorCreateRequest request)
+    {
+        FluentValidation.Results.ValidationResult validationResult = await validator.ValidateAsync(request);
+        if (!validationResult.IsValid)
+            throw new BadRequestAxHttpException(moreInfo: validationResult.Errors.ToSimpleMessageString());
+
+        Guid id = await UserService.CreateMayorAsync(request);
+
+        return StatusCode(StatusCodes.Status201Created, new { Id = id });
+    }
+
+    /// <summary>
     /// Endpoint that creates Supervisor
     /// </summary>
     /// <param name="request"></param>
