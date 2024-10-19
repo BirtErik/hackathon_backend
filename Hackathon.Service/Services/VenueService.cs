@@ -228,6 +228,7 @@ public class VenueService : IVenueService
     public async Task<ListVenueResult> ListAllByTenanatIdAsync(Guid id)
     {
         var venueQuery = Repo.AsQueryable<VenueEntity>()
+            .Where(x => x.TenantId == id)
             .AsNoTracking();
 
         List<ListVenueResultData> contents = (await venueQuery.ToListAsync()).Select(x => new ListVenueResultData
