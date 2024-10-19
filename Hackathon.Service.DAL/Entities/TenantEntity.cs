@@ -4,7 +4,6 @@ namespace Hackathon.Service.DAL.Entities;
 
 public class TenantEntity : BaseEntity
 {
-    // TODO: Name should be unique?
     [Column("name")]
     public required string Name { get; set; }
 

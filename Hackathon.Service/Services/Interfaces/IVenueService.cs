@@ -9,7 +9,7 @@ public interface IVenueService
 {
     Task<Guid> CreateAsync(VenueCreateRequest request);
 
-    Task<ActionResult> CreateReservationAsync(VenueReservationCreateRequest request);
+    Task<ActionResult> CreateReservationRequestAsync(ReservationRequestCreateRequest request);
 
     Task UpdateAsync(Guid id, VenueUpdateRequest request);
 

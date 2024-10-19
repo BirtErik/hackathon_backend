@@ -21,14 +21,13 @@ public class PublicController : PublicControllerDoc
         VenueService = venueService;
     }
 
-    // endpoint for creating reservations
     /// <summary>
-    /// Endpoint that creates a Reservation
+    /// Endpoint that creates a Reservation Request
     /// </summary>
-    [HttpPost("reservations")]
-    public async Task<ActionResult> CreateReservation([FromBody] VenueReservationCreateRequest request)
+    [HttpPost("reservation-requests")]
+    public async Task<ActionResult> CreateReservationRequest([FromBody] ReservationRequestCreateRequest request)
     {
-        return await VenueService.CreateReservationAsync(request);
+        return await VenueService.CreateReservationRequestAsync(request);
     }
 
     /// <summary>
