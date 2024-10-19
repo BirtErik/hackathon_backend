@@ -1,25 +1,44 @@
-var builder = WebApplication.CreateBuilder(args);
+using Hackathon.Service;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+public static class WebAppHoster
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public static void HostWebApp<TStartup>(string[] args, int port) where TStartup : class
+    {
+        CreateHostBuilder<TStartup>(args, port).Build().Run();
+    }
+
+    public static IHostBuilder CreateHostBuilder<TStartup>(string[] args, int port) where TStartup : class
+    {
+        return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<TStartup>();
+                webBuilder.UseUrls($"http://*:{port}");
+            });
+    }
+
 }
+public class Program
+{
+    public const int PORT = 8097;
 
-app.UseHttpsRedirection();
+    public static void Main(string[] args)
+    {
+        IConfigurationRoot config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: false)
+            .AddEnvironmentVariables()
+            .Build();
 
-app.UseAuthorization();
+        //int port = ConfigurationUtils.GetDefinedPort(config, PORT);
+        int port = PORT;
 
-app.MapControllers();
+        WebAppHoster.HostWebApp<Startup>(args, port);
+    }
 
-app.Run();
+    // EF will look for a CreateHostBuilder method in Program. If it finds it, it won't call Main
+    public static IHostBuilder CreateHostBuilder(string[] args)
+    {
+        Console.WriteLine("Doing Entity Framework migrations, not starting full application");
+        return Host.CreateDefaultBuilder();
+    }
+}
