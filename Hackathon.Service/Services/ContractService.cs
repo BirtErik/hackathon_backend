@@ -38,8 +38,8 @@ public class ContractService : IContractService
             VenueId = reservationRequest.VenueId,
             StartDate = reservationRequest.StartDate,
             EndDate = reservationRequest.EndDate,
-            Bills = 0,
-            Status = "Initialized",
+            Bills = 0, // TODO: Add bills
+            Status = "Initialized", // TODO: Define enum
             PostNumber = "0",
             Vat = 25,
         };

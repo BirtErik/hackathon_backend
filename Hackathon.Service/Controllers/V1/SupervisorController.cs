@@ -132,7 +132,7 @@ public class SupervisorController : SupervisorControllerDoc
     /// Endpoint that initialize Contract from Reservation Request
     /// </summary>
     /// <param name="id"></param>
-    [HttpGet("contracts/{id:guid}")]
+    [HttpPost("reservation-requests/{id:guid}/initialize-contract")]
     public async Task<ActionResult<Guid>> InitializeContract(Guid id)
     {
         return await ContractService.CreateContractFromReservationRequestAsync(id);
