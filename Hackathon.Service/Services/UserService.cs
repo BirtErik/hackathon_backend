@@ -1,6 +1,5 @@
 ﻿using Hackathon.Service.ApiRequests;
 using Hackathon.Service.ApiRequests.Models;
-using Hackathon.Service.Models.Keycloak;
 using Hackathon.Service.Models.Keycloak.Requests;
 using Hackathon.Service.Models.Keycloak.Results;
 using Hackathon.Service.Services.Interfaces;
@@ -154,7 +153,7 @@ public class UserService : IUserService
 
         var newUser = new
         {
-            username = request.Username,
+            username = request.Email,
             email = request.Email,
             firstName = request.FirstName,
             lastName = request.LastName,
